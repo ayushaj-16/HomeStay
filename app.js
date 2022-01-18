@@ -22,11 +22,13 @@ const AccomodationRoute     = require('./routes/accomodations'),
       ForgotPasswordRoute = require('./routes/forgotPassword');
 
 // DATABASE SETUP
+const mongoAtlasUrl = process.env.DB_URL;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
 mongoose.set('useFindAndModify', false);
-mongoose.connect("mongodb://localhost/Camp_India_final");
+//currently running at mongoDB Atlas
+mongoose.connect(mongoAtlasUrl);  //can switch to localhost url - mongodb://localhost/Camp_India_final
 //seedDB(); //Seed the database
 
 // PASSPORT CONFIG
