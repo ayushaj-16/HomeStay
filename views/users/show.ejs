@@ -1,0 +1,53 @@
+<%- include ("../partials/header") %> 
+  <div class="row">
+    <div class="col-md-4 my-5">
+      <div class="card">
+        <img class="card-img-top" src="<%= user.avatar %>" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title"><%= user.firstName %> <%= user.lastName %></h5>
+          <% if(user.bio.length > 0) { %> 
+            <p class="card-text" id="bio"><%= user.bio %></p>
+          <% } else { %> 
+            <p class="card-text" id="bio">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Consequuntur quos quaerat repudiandae beatae, harum animi maxime ratione ipsum officiis perferendis omnis iste ab doloribus, impedit ducimus quis earum voluptatum ea.
+            </p>
+          <% } %>
+          <form action="/user/<%= user.id %>?_method=PUT" class="d-none" id="form" method="post">
+            <div class="form-group">
+              <textarea name="bio" id="editedText" cols="40" rows="10"><%= user.bio %></textarea>
+              <button class="btn btn-primary d-none" id="save">Save</button>
+            </div>
+          </form>          
+          <% if(currentUser && currentUser.equals(user.id)) { %>    
+            <button class="btn btn-success btn-sm float-right" id="edit">Edit bio</button>
+          <% } else if(currentUser && hasFollowed) { %>
+            <a href="unfollow/<%= user.id %>"><button class="btn btn-light float-right following"> Following <i class="fas fa-check-circle"></i></button></a>
+          <% } else { %> 
+            <a href="follow/<%= user.id %>"><button class="btn btn-primary btn-sm float-right">Follow <%= user.username %></button></a>
+          <% } %> 
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <h4 class="my-3"><%= user.username %>'s Campgrounds</h4>
+      <% if(camps.length < 1) { %>
+        <h6 class="mt-4 ml-2"><em>No campgrounds submitted yet...</em></h6> 
+      <% } else { %>
+      <% for(const camp of camps) { %>
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4 align-self-center">
+              <img src="<%= camp.image %> " class="card-img-top img-fluid" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title"><a href="/campgrounds/<%= camp._id %>"><%= camp.name %></a></h5>
+                <p class="card-text"><%= camp.description.substring(0, 120) %> </p>
+                <p class="card-text"><small class="text-muted"><%= moment(camp.createdAt).fromNow() %> </small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% }} %> 
+    </div>
+  </div>
+<%- include ("../partials/footer") %> 

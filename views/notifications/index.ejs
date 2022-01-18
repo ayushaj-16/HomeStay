@@ -1,0 +1,23 @@
+<%- include ("../partials/header") %> 
+
+<h1 class="display-4 my-5">Notifications</h1>
+<% if(allNotifications.length === 0) { %>
+	<h4>No notifications in the last few months</h4>
+<% } else { %> 
+<ul class="list-group">
+	<% allNotifications.forEach(function(notification) { %>
+	<li class="list-group-item">
+		<% if(notification.campgroundId) { %> 
+		<a href="/campgrounds/<%= notification.campgroundId %>">
+			<%= notification.username %> created a new campground - <%= notification.campName %> 
+		</a>
+	<% } else { %>
+		<a href="/user/<%= notification.userId %>">
+			<%= notification.username %> started following you
+		</a>
+	<% } %>  
+	</li>
+	<% }); %>
+</ul>
+<% } %> 
+<%- include ("../partials/footer") %> 
