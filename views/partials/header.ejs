@@ -7,19 +7,19 @@
   <link rel="stylesheet" href="/stylesheets/main.css">
   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
   <script src="https://kit.fontawesome.com/011169ab34.js" crossorigin="anonymous"></script>
-  <title>CampIndia</title>
+  <title>HomeStay</title>
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-dark mb-2" style="background-color: rgb(28, 147, 168); color: green;">
     <div class="container-fluid">
-    <a class="navbar-brand" href="/"><i class="fas fa-campground "></i>CampIndia</a>
+    <a class="navbar-brand" href="/"><i class="fas fa-campground "></i>HomeStay</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
   
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <div class="nav navbar-nav mr-auto">
-        <a class="nav-item nav-link <%= typeof page !== 'undefined' && page === 'campgrounds' ? 'active' : '' %>" href="/campgrounds"><i class="fas fa-home"></i> Home</a>
+        <a class="nav-item nav-link <%= typeof page !== 'undefined' && page === 'accomodations' ? 'active' : '' %>" href="/accomodations"><i class="fas fa-home"></i> Home</a>
       </div>
       <div class="nav navbar-nav ml-auto mr-2">
         <% if(currentUser == null) { %> 
@@ -39,10 +39,10 @@
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <% notifications.forEach(function(notification) { %>                          
                 <a class="dropdown-item" href="/user/notifications/<%= notification.id %>">
-                  <% if(notification.campName === null) { %>
+                  <% if(notification.stayName === null) { %>
                     <%= notification.username %> started following you
                   <% } else { %> 
-                    <%= notification.username %> created a new campground
+                    <%= notification.username %> created a new accomodation
                   <% } %> 
                 </a>
               <% }); %>

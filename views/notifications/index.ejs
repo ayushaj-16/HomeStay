@@ -7,9 +7,9 @@
 <ul class="list-group">
 	<% allNotifications.forEach(function(notification) { %>
 	<li class="list-group-item">
-		<% if(notification.campgroundId) { %> 
-		<a href="/campgrounds/<%= notification.campgroundId %>">
-			<%= notification.username %> created a new campground - <%= notification.campName %> 
+		<% if(notification.accomodationId) { %> 
+		<a href="/accomodations/<%= notification.accomodationId %>">
+			<%= notification.username %> created a new accomodation - <%= notification.stayName %> 
 		</a>
 	<% } else { %>
 		<a href="/user/<%= notification.userId %>">

@@ -1,6 +1,6 @@
 const express       = require('express'),
       router        = express.Router(),
-      Campground    = require('../models/campground'),
+      Accomodation  = require('../models/accomodation'),
       Notification  = require('../models/notification'),
       middleware    = require('../middleware'),
       User          = require('../models/user');
@@ -13,8 +13,8 @@ router.get("/:id", (req, res) => {
       return res.redirect("/");
     }
     else {
-      Campground.find().where('author.id').equals(foundUser._id).populate('followers').exec((err, camps) => {
-        if(err || !camps) {
+      Accomodation.find().where('author.id').equals(foundUser._id).populate('followers').exec((err, stays) => {
+        if(err || !stays) {
           req.flash("error", err);
           res.redirect("/");
         }
@@ -22,7 +22,7 @@ router.get("/:id", (req, res) => {
           var hasFollowed = false;
           if(req.user && foundUser.followers.indexOf(req.user.id) !== -1) 
             hasFollowed = true;
-          res.render("users/show", {user: foundUser, camps, hasFollowed});
+          res.render("users/show", {user: foundUser, stays, hasFollowed});
         }
       });
     }
@@ -34,7 +34,7 @@ router.put("/:id", (req, res) => {
   User.findById(req.params.id, (err, foundUser) => {
     if(err || !foundUser) {
       req.flash("error", "Updation failed.");
-      return res.redirect("/campgrounds");
+      return res.redirect("/accomodations");
     }
     if(req.body.bio.length > 0)
       foundUser.bio = req.body.bio;
@@ -55,8 +55,8 @@ router.get('/follow/:id', middleware.isLoggedIn, async function(req, res) {
     let newNotification = {
       username: req.user.username,
       userId: req.user.id,
-      campgroundId: null,
-      campName: null
+      accomodationId: null,
+      stayName: null
     }
     let notification = await Notification.create(newNotification);
     user.notifications.push(notification);
@@ -77,7 +77,7 @@ router.get('/unfollow/:id', middleware.isLoggedIn, async function(req, res) {
       throw "user not found";
     while(user.followers.indexOf(req.user._id)!= -1) 
       user.followers.pop(req.user._id);
-    let prevNotifications = await Notification.find({'userId': req.user.id, 'campName': null});
+    let prevNotifications = await Notification.find({'userId': req.user.id, 'stayName': null});
     if(prevNotifications) {
       for(notification of prevNotifications) {
         await Notification.findByIdAndRemove(notification);
@@ -118,10 +118,10 @@ router.get('/notifications/:id', middleware.isLoggedIn, async function(req, res)
       throw "Notifications not found";
     notification.isRead = true;
     notification.save();
-    if(notification.campgroundId === null)
+    if(notification.accomodationId === null)
       res.redirect(`/user/${notification.userId}`);
     else
-      res.redirect(`/campgrounds/${notification.campgroundId}`);
+      res.redirect(`/accomodations/${notification.accomodationId}`);
   } catch(err) {
     req.flash('error', err.message);
     res.redirect('back');

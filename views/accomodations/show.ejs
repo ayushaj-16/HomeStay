@@ -2,7 +2,7 @@
 
   <div class="row">
     <div class="col-md-3 mb-3 mb-md-0">
-      <p class="lead"><strong>CampIndia</strong></p>
+      <p class="lead"><strong>HomeStay</strong></p>
       <div class="list-group">
         <a href="#" class="list-group-item list-group-item-action active">Info 1</a>
         <a href="#" class="list-group-item list-group-item-action">Info 2</a>
@@ -23,8 +23,8 @@
             <em>&dash; Submitted by <a href="/user/<%= location.author.id %>"><%= location.author.username %></a>, <%= moment(location.createdAt).fromNow() %></em>
           </p>
           <% if(currentUser && (location.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %> 
-            <a class="btn btn-warning btn-sm" href="/campgrounds/<%= location._id %>/edit">Edit</a>
-            <form class="delete-form" action="/campgrounds/<%= location._id %>?_method=DELETE" method="post">
+            <a class="btn btn-warning btn-sm" href="/accomodations/<%= location._id %>/edit">Edit</a>
+            <form class="delete-form" action="/accomodations/<%= location._id %>?_method=DELETE" method="post">
               <button class="btn btn-danger btn-sm">Delete</button>
             </form>
           <% } %> 
@@ -32,7 +32,7 @@
       </div>
       <div class="card bg-light my-3">
         <div class="mt-3 mr-3">
-          <a class="btn btn-success float-right" href="/campgrounds/<%= location._id %>/comments/new">Leave a Review</a>
+          <a class="btn btn-success float-right" href="/accomodations/<%= location._id %>/comments/new">Leave a Review</a>
         </div><hr>
         <div class="card-body">
           <% for (const comment of location.comments) {%> 
@@ -46,9 +46,9 @@
                 <% if(currentUser && (comment.author.id.equals(currentUser._id) || currentUser.isAdmin)) { %> 
                   <a 
                     class="btn btn-sm btn-warning"  
-                    href="/campgrounds/<%= location._id %>/comments/<%= comment._id %>/edit">Edit
+                    href="/accomodations/<%= location._id %>/comments/<%= comment._id %>/edit">Edit
                   <a>
-                  <form class="delete-form" action="/campgrounds/<%= location._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
+                  <form class="delete-form" action="/accomodations/<%= location._id %>/comments/<%= comment._id %>?_method=DELETE" method="post">
                     <input type="submit" class="btn btn-sm btn-danger" value="Delete">
                   </form>
                 <% } %> 

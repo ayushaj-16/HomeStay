@@ -28,21 +28,21 @@
       </div>
     </div>
     <div class="col-md-8">
-      <h4 class="my-3"><%= user.username %>'s Campgrounds</h4>
-      <% if(camps.length < 1) { %>
-        <h6 class="mt-4 ml-2"><em>No campgrounds submitted yet...</em></h6> 
+      <h4 class="my-3"><%= user.username %>'s Accommodations</h4>
+      <% if(stays.length < 1) { %>
+        <h6 class="mt-4 ml-2"><em>No accommodations submitted yet...</em></h6> 
       <% } else { %>
-      <% for(const camp of camps) { %>
+      <% for(const stay of stays) { %>
         <div class="card mb-3">
           <div class="row no-gutters">
             <div class="col-md-4 align-self-center">
-              <img src="<%= camp.image %> " class="card-img-top img-fluid" alt="...">
+              <img src="<%= stay.image %> " class="card-img-top img-fluid" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">
-                <h5 class="card-title"><a href="/campgrounds/<%= camp._id %>"><%= camp.name %></a></h5>
-                <p class="card-text"><%= camp.description.substring(0, 120) %> </p>
-                <p class="card-text"><small class="text-muted"><%= moment(camp.createdAt).fromNow() %> </small></p>
+                <h5 class="card-title"><a href="/accomodations/<%= stay._id %>"><%= stay.name %></a></h5>
+                <p class="card-text"><%= stay.description.substring(0, 120) %> </p>
+                <p class="card-text"><small class="text-muted"><%= moment(stay.createdAt).fromNow() %> </small></p>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 <h1 style="text-align: center;" class="mb-4">Add a New Comment to <%= location.name %> </h1>
 <div class="row">
 <div class="col-12 col-sm-8 col-md-6 col-lg-4" style="margin: 0 auto;">
-  <form action="/campgrounds/<%= location._id %>/comments" method="POST">
+  <form action="/accomodation/<%= location._id %>/comments" method="POST">
     <div class="form-group">
       <input class="form-control" type="text" name="comment[text]" placeholder="text" required>
     </div>
@@ -11,7 +11,7 @@
       <button class="btn btn-primary btn-lg btn-block">Submit!</button>
     </div>
   </form>
-  <a href="/campgrounds/<%= location._id %>">Go back</a>
+  <a href="/accomodation/<%= location._id %>">Go back</a>
 </div>
 </div>
 

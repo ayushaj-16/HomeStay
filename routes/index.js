@@ -15,12 +15,12 @@ router.get("/register", (req, res) => {
 
 // handling signup logic
 router.post("/register", (req, res) => {
-  if(req.body.camp.avatar.length === 0) {
+  if(req.body.stay.avatar.length === 0) {
     req.body.avatar = "https://www.w3schools.com/bootstrap4/img_avatar3.png"
   }
-  var camp = req.body.camp;
-  camp.username = req.body.username;
-  var newUser = new User(camp);
+  var stay = req.body.stay;
+  stay.username = req.body.username;
+  var newUser = new User(stay);
   if(req.body.adminCode === "secretCode123") {
     newUser.isAdmin = true;
   }
@@ -32,7 +32,7 @@ router.post("/register", (req, res) => {
     else {
       passport.authenticate("local")(req, res, () => {
         req.flash("success", `Successfully Signed Up! Nice to meet you ${user.username}`);
-        res.redirect("/campgrounds");
+        res.redirect("/accomodations");
       });
     }
   });
@@ -45,10 +45,10 @@ router.get("/login", (req, res) => {
 
 // handling login logic
 router.post("/login", passport.authenticate("local", {
-    successRedirect: "/campgrounds",
+    successRedirect: "/accomodations",
     failureRedirect: "/login",
     failureFlash: 'Invalid username or password',
-    successFlash: 'Welcome back to CampIndia!'
+    successFlash: 'Welcome back to HomeStay!'
   }), (req, res) => {
 });
 
@@ -56,7 +56,7 @@ router.post("/login", passport.authenticate("local", {
 router.get("/logout", (req,res) => {
   req.logOut();
   req.flash("success", "See you later!");
-  res.redirect("/campgrounds");
+  res.redirect("/accomodations");
 });
 
 module.exports = router;

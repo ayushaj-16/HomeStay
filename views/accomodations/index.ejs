@@ -2,15 +2,15 @@
 
 
   <header class="jumbotron">
-    <h1 class="display-3"><i class="fas fa-campground" style="color: rgb(192, 78, 78); font-size: 90%;"></i>Welcome to CampIndia!</h1>
-    <p class="lead">View our hand-picked campgrounds from all over India</p>
+    <h1 class="display-3"><i class="fas fa-campground" style="color: rgb(192, 78, 78); font-size: 90%;"></i>Welcome to HomeStay!</h1>
+    <p class="lead">View our hand-picked accommodations from all over India and find a host family with similar interests to stay together.</p>
     <hr class="my-2"><br>
     <div class="row">
       <div class="col-md-6 mb-3">
-        <a class="btn btn-info btn-lg" href="/campgrounds/new">Add new Campground <i class="fas fa-plus-circle    "></i></a>
+        <a class="btn btn-info btn-lg" href="/accomodations/new">Add new Accommodation <i class="fas fa-plus-circle    "></i></a>
       </div>
       <div class="col-md-6 mb-3 d-flex justify-content-md-end">
-      <form action="/campgrounds" method="GET" class="form-inline">
+      <form action="/accomodations" method="GET" class="form-inline">
         <input class="form-control mr-sm-2" type="search" name="search" aria-label="Search"
       <% if(search && search.length > 0) { %> value="<%= search %>" <% } %>  placeholder="Search"> 
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
@@ -32,7 +32,7 @@
           <img class="card-img-top" src="<%= location.image %>"  alt="Image">
           <div class="card-body p-2">
           <h5 class="card-title"><%= location.name %> </h5>
-          <a href="/campgrounds/<%= location._id %>" class = "btn btn-info btn-sm mb-2">More info</a>
+          <a href="/accomodations/<%= location._id %>" class = "btn btn-info btn-sm mb-2">More info</a>
           </div>
         </div>
       </div>  

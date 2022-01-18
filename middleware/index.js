@@ -1,4 +1,4 @@
-const Campground = require("../models/campground");
+const Accomodation = require("../models/accomodation");
 const Comment = require("../models/comment");
 
 // all middlewares goes here
@@ -12,15 +12,15 @@ middlewareObj.isLoggedIn = (req, res, next) => {
   res.redirect("/login");
 };
 
-middlewareObj.checkCampgroundOwnership = (req, res, next) => {
+middlewareObj.checkAccomodationOwnership = (req, res, next) => {
   if(req.isAuthenticated()) {    
-    Campground.findById(req.params.id, (err, foundCampground) => {
-      if(err || !foundCampground) {
-        req.flash("error", "Campground not found");
+    Accomodation.findById(req.params.id, (err, foundAccomodation) => {
+      if(err || !foundAccomodation) {
+        req.flash("error", "Accomodation not found");
         res.redirect("back");
       }
       else {
-        if(foundCampground.author.id.equals(req.user._id) || req.user.isAdmin)
+        if(foundAccomodation.author.id.equals(req.user._id) || req.user.isAdmin)
           next();
         else {
           req.flash("error", "You don't have permission to do that");

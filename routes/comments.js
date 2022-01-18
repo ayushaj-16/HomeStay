@@ -1,28 +1,28 @@
 const express = require('express');
 const router = express.Router({mergeParams: true});
-const Campground = require('../models/campground');
+const Accomodation = require('../models/accomodation');
 const Comment = require('../models/comment');
 const middleware = require('../middleware');
 
 // Create new comment
 router.get("/new", middleware.isLoggedIn, (req, res) => {
-  Campground.findById(req.params.id, (err,camp) =>{
-    if(err || !camp) {
-      req.flash("error", "Associated campground not found");
+  Accomodation.findById(req.params.id, (err,stay) =>{
+    if(err || !stay) {
+      req.flash("error", "Associated accomodation not found");
       res.redirect("back");
     }
     else {
-      res.render("comments/new",{location: camp});
+      res.render("comments/new",{location: stay});
     }
   });
 });
 
 // CREATE - Adding comment logic
 router.post("/", middleware.isLoggedIn, (req, res) => {
-  //lookup campground using ID
-  Campground.findById(req.params.id, (err, camp) => {
-    if(err || !camp) {
-      req.flash("error", "Campground not found");
+  //lookup accomodation using ID
+  Accomodation.findById(req.params.id, (err, stay) => {
+    if(err || !stay) {
+      req.flash("error", "Accomodation not found");
       res.redirect("back");
     }
     else {
@@ -37,12 +37,12 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
           comment.author.id = req.user._id;
           comment.author.username = req.user.username;
           comment.save();
-          //connect new comment to campground
-          camp.comments.push(comment);
-          camp.save();
-          //redirect to campground show page
+          //connect new comment to accomodation
+          stay.comments.push(comment);
+          stay.save();
+          //redirect to accomodation show page
           req.flash("success", "Successfully added comment");
-          res.redirect(`/campgrounds/${camp.id}`);
+          res.redirect(`/accomodations/${stay.id}`);
         }
       });
     }
@@ -52,9 +52,9 @@ router.post("/", middleware.isLoggedIn, (req, res) => {
 
 // EDIT - editing an existing comment
 router.get("/:comment_id/edit", middleware.checkCommentOwnership,(req, res) => {
-  Campground.findById(req.params.id, (err, camp) => {
-    if(err || !camp) {
-      req.flash("error", "Campground not found");
+  Accomodation.findById(req.params.id, (err, stay) => {
+    if(err || !stay) {
+      req.flash("error", "Accomodation not found");
       return res.redirect("back");
     }
     Comment.findById(req.params.comment_id, (err, foundComment) => {
@@ -76,7 +76,7 @@ router.put("/:comment_id", middleware.checkCommentOwnership,(req, res) => {
     }
     else {
       req.flash("success", "Successfully updated comment!");
-      res.redirect(`/campgrounds/${req.params.id}`);
+      res.redirect(`/accomodations/${req.params.id}`);
     }
   });
 });
@@ -90,7 +90,7 @@ router.delete("/:comment_id" , middleware.checkCommentOwnership, (req, res) => {
     }
     else {
       req.flash("error", "Comment deleted")
-      res.redirect(`/campgrounds/${req.params.id}`);
+      res.redirect(`/accomodations/${req.params.id}`);
     }
   });
 });

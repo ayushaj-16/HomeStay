@@ -1,5 +1,5 @@
 const mongoose   = require('mongoose'),
-      Campground = require('./models/campground'),
+      Accomodation = require('./models/accomodation'),
       Comment    = require('./models/comment'); 
 var seeds = [
   {
@@ -56,20 +56,20 @@ var seeds = [
 
 async function SeedDB() {
   try {
-    //Remove all Campgrounds and Comments
-    await Campground.deleteMany({});
-    console.log("Campgrounds removed!");
+    //Remove all Accomodations and Comments
+    await Accomodation.deleteMany({});
+    console.log("Accomodations removed!");
     await Comment.deleteMany({});
     console.log("Comments removed!");
-    //Add a few Campgrounds
+    //Add a few Accomodations
     for (const seed of seeds) {
       seed.price = 999;
       seed.author = {
         id: "5f3565add5d2f51d6c780f38",
         "username": "AyushAJ"
       }
-      let campground = await Campground.create(seed);
-      console.log("Campground created!");
+      let accomodation = await Accomodation.create(seed);
+      console.log("Accomodation created!");
       let comment = await Comment.create( {
         text: "This place is great, but I wish there was Internet",
         author: {
@@ -78,9 +78,9 @@ async function SeedDB() {
         }
       });
       console.log("Comment created!");
-      campground.comments.push(comment);
-      campground.save();
-      console.log("Comment added to campground!");
+      accomodation.comments.push(comment);
+      accomodation.save();
+      console.log("Comment added to accomodation!");
     }
   } catch(err) {
     console.log(err);

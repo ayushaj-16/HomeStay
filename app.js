@@ -15,7 +15,7 @@ const express         = require('express'),
       seedDB          = require('./seeds');
 
 // Requiring Routes
-const CampgroundRoute     = require('./routes/campgrounds'),
+const AccomodationRoute     = require('./routes/accomodations'),
       CommentRoute        = require('./routes/comments'),
       IndexRoute          = require('./routes/index'),
       UserRoute           = require('./routes/user'),
@@ -31,7 +31,7 @@ mongoose.connect("mongodb://localhost/Camp_India_final");
 
 // PASSPORT CONFIG
 app.use(require('express-session')({
-  secret: "This is CampIndia Authentication.",
+  secret: "This is HomeStay Authentication.",
   saveUninitialized: false,
   resave: false
 }));
@@ -66,13 +66,13 @@ app.use(methodOverride("_method"));
 
 // ROUTES CONFIG
 app.use("/", IndexRoute);
-app.use("/campgrounds", CampgroundRoute);
-app.use("/campgrounds/:id/comments", CommentRoute);
+app.use("/accomodations", AccomodationRoute);
+app.use("/accomodations/:id/comments", CommentRoute);
 app.use("/user", UserRoute);
 app.use("/", ForgotPasswordRoute);
 app.set("view engine", "ejs");
 
 // PORT SETUP
 app.listen(5500,() => {
-  console.log("CampIndia Server has started!!");
+  console.log("HomeStay Server has started!!");
 });
