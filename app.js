@@ -102,6 +102,6 @@ app.set("view engine", "ejs");
 
 // PORT SETUP
 const port = process.env.PORT || 5500;
-app.listen(5500,() => {
+app.listen(port,() => {
   console.log(`HomeStay Server has started on port ${port} !!`);
 });
