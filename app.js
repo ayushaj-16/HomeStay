@@ -21,8 +21,12 @@ const AccomodationRoute     = require('./routes/accomodations'),
       UserRoute           = require('./routes/user'),
       ForgotPasswordRoute = require('./routes/forgotPassword');
 
+// Session information storing
+const session = require('express-session');
+const MongoDBStore = require('connect-mongo');
+
 // DATABASE SETUP
-const mongoAtlasUrl = process.env.DB_URL;
+const mongoAtlasUrl = "mongodb://localhost/Camp_India_final"; //process.env.DB_URL;
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
@@ -31,12 +35,25 @@ mongoose.set('useFindAndModify', false);
 mongoose.connect(mongoAtlasUrl);  //can switch to localhost url - mongodb://localhost/Camp_India_final
 //seedDB(); //Seed the database
 
-// PASSPORT CONFIG
-app.use(require('express-session')({
+// SESSION CONFIG
+
+const sessionConfig = {
+  name: 'session',
   secret: "This is HomeStay Authentication.",
   saveUninitialized: false,
-  resave: false
-}));
+  resave: false,
+  store: MongoDBStore.create({
+    mongoUrl: mongoAtlasUrl,
+  }),
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000*60*60*24*7,    // expires in 1 day (time in milliseconds)
+    maxAge: 1000*60*60*24*7
+  }
+};
+
+// PASSPORT CONFIG
+app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
