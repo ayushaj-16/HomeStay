@@ -1,4 +1,6 @@
-require('dotenv').config();
+if(process.env.NODE_ENV !== "production") {
+  require('dotenv').config();
+}
 
 /* ---------Order of lines is important---------------- */
 /* -----------Do not alter order, ie. ----------------- */
@@ -24,9 +26,10 @@ const AccomodationRoute     = require('./routes/accomodations'),
 // Session information storing
 const session = require('express-session');
 const MongoDBStore = require('connect-mongo');
+const secret = process.env.SECRET || "This is HomeStay Authentication.";
 
 // DATABASE SETUP
-const mongoAtlasUrl = "mongodb://localhost/Camp_India_final"; //process.env.DB_URL;
+const mongoAtlasUrl = process.env.DB_URL || "mongodb://localhost/Camp_India_final";
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useUnifiedTopology', true);
 mongoose.set('useCreateIndex', true);
@@ -35,15 +38,21 @@ mongoose.set('useFindAndModify', false);
 mongoose.connect(mongoAtlasUrl);  //can switch to localhost url - mongodb://localhost/Camp_India_final
 //seedDB(); //Seed the database
 
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected!");
+});
+
 // SESSION CONFIG
 
 const sessionConfig = {
   name: 'session',
-  secret: "This is HomeStay Authentication.",
+  secret,
   saveUninitialized: false,
   resave: false,
   store: MongoDBStore.create({
-    mongoUrl: mongoAtlasUrl,
+    mongoUrl: mongoAtlasUrl
   }),
   cookie: {
     httpOnly: true,
@@ -92,6 +101,7 @@ app.use("/", ForgotPasswordRoute);
 app.set("view engine", "ejs");
 
 // PORT SETUP
+const port = process.env.PORT || 5500;
 app.listen(5500,() => {
-  console.log("HomeStay Server has started!!");
+  console.log(`HomeStay Server has started on port ${port} !!`);
 });
